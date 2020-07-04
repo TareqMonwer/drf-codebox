@@ -1,11 +1,14 @@
 from django.contrib.auth.models import User, Group
+from snippets.models import Snippet
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
+    snippets = serializers.PrimaryKeyRelatedField(many=True, queryset=Snippet.objects.all())
+
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'is_staff']
+        fields = ['id', 'username', 'snippets']
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
