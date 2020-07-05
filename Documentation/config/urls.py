@@ -15,20 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .api_views import UserList, UserDetail, GroupViewSet
-from rest_framework import routers
-
-
-# API Router.
-router = routers.DefaultRouter()
-router.register(r'groups', GroupViewSet)
 
 # Project routes.
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('users/', UserList.as_view()),
-    path('users/<int:pk>/', UserDetail.as_view()),
     path('', include('snippets.urls')),
-    path('', include(router.urls)),
 ]
